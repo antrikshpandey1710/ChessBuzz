@@ -23,22 +23,3 @@ android {
         }
     }
 }
-
-tasks.register("copyWebApp", Copy) {
-    dependsOn(":webBuild")
-
-    from("../dist")
-    into("src/main/assets")
-}
-
-tasks.register("webBuild", Exec) {
-    workingDir("../")
-
-    commandLine(
-        "npm",
-        "run",
-        "build"
-    )
-}
-
-preBuild.dependsOn("copyWebApp")
