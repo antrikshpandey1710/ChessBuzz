@@ -25,11 +25,7 @@ jobs:
 
       - name: Build React app
         run: npm run build
-              - name: Copy web app to Android assets
-        run: |
-          mkdir -p app/src/main/assets
-          rm -rf app/src/main/assets/*
-          cp -r dist/. app/src/main/assets/
+
 
       - name: Setup Java
         uses: actions/setup-java@v4
