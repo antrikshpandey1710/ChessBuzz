@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -11,108 +12,103 @@
 
     <title>ChessBuzz</title>
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/css/chessboard-1.0.0.min.css"
-    >
-
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <header class="header">
-            <div class="logo">♟ ChessBuzz</div>
-            <div class="subtitle">Play Chess</div>
-        </header>
+    <header class="header">
+        <div class="logo">♟ ChessBuzz</div>
+        <div class="subtitle">Play Chess</div>
+    </header>
 
-        <main>
 
-            <section id="menu" class="menu">
+    <main>
 
-                <h1>Choose Difficulty</h1>
+        <section id="menu" class="menu">
 
-                <button class="difficulty easy"
-                        onclick="startGame('easy')">
-                    🟢 Easy
+            <h1>Choose Difficulty</h1>
+
+            <button class="difficulty easy"
+                    onclick="startGame('easy')">
+                🟢 Easy
+            </button>
+
+            <button class="difficulty medium"
+                    onclick="startGame('medium')">
+                🟡 Medium
+            </button>
+
+            <button class="difficulty hard"
+                    onclick="startGame('hard')">
+                🔴 Hard
+            </button>
+
+            <button class="difficulty advanced"
+                    onclick="startGame('advanced')">
+                ⚫ Advanced
+            </button>
+
+        </section>
+
+
+        <section id="game" class="game">
+
+            <div class="topbar">
+
+                <button onclick="backToMenu()">
+                    ← Menu
                 </button>
 
-                <button class="difficulty medium"
-                        onclick="startGame('medium')">
-                    🟡 Medium
+                <span id="difficultyText">
+                    Easy
+                </span>
+
+                <button onclick="restartGame()">
+                    ↻
                 </button>
 
-                <button class="difficulty hard"
-                        onclick="startGame('hard')">
-                    🔴 Hard
+            </div>
+
+
+            <div id="status">
+                Your turn
+            </div>
+
+
+            <div id="board"></div>
+
+
+            <div class="game-buttons">
+
+                <button onclick="undoMove()">
+                    Undo
                 </button>
 
-                <button class="difficulty advanced"
-                        onclick="startGame('advanced')">
-                    ⚫ Advanced
+                <button onclick="restartGame()">
+                    New Game
                 </button>
 
-            </section>
+            </div>
 
 
-            <section id="game" class="game">
+            <div id="message"></div>
 
-                <div class="topbar">
+        </section>
 
-                    <button onclick="backToMenu()">
-                        ← Menu
-                    </button>
+    </main>
 
-                    <span id="difficultyText">
-                        Easy
-                    </span>
-
-                    <button onclick="restartGame()">
-                        ↻
-                    </button>
-
-                </div>
+</div>
 
 
-                <div id="status">
-                    Your turn
-                </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
 
-                <div id="board"></div>
-
-
-                <div class="game-buttons">
-
-                    <button onclick="undoMove()">
-                        Undo
-                    </button>
-
-                    <button onclick="restartGame()">
-                        New Game
-                    </button>
-
-                </div>
-
-
-                <div id="message"></div>
-
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/js/chessboard-1.0.0.min.js"></script>
-
-    <script src="app.js"></script>
+<script src="app.js"></script>
 
 </body>
 
