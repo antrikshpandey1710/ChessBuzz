@@ -1,0 +1,170 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #101318;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.app {
+    width: 100%;
+    min-height: 100vh;
+    padding: 12px;
+}
+
+.header {
+    text-align: center;
+    padding: 12px 0 18px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.subtitle {
+    margin-top: 5px;
+    color: #9da3ad;
+    font-size: 14px;
+}
+
+.menu {
+    width: 100%;
+    max-width: 430px;
+    margin: 35px auto;
+    text-align: center;
+}
+
+.menu h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.difficulty {
+    width: 100%;
+    border: 0;
+    border-radius: 14px;
+    padding: 17px 15px;
+    margin: 7px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.difficulty:active {
+    transform: scale(0.98);
+}
+
+.easy {
+    background: #27844a;
+}
+
+.medium {
+    background: #8a7418;
+}
+
+.hard {
+    background: #9c3030;
+}
+
+.advanced {
+    background: #30343d;
+}
+
+.game {
+    display: none;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.topbar button,
+.game-buttons button {
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 15px;
+    background: #252a33;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#difficultyText {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#status {
+    text-align: center;
+    min-height: 22px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#board {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.game-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.game-buttons button {
+    flex: 1;
+}
+
+#message {
+    text-align: center;
+    min-height: 25px;
+    margin-top: 14px;
+    font-weight: 700;
+}
+
+@media (max-width: 450px) {
+
+    .app {
+        padding: 8px;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .menu {
+        margin-top: 25px;
+    }
+
+    .menu h1 {
+        font-size: 22px;
+    }
+
+    #board {
+        width: 100%;
+    }
+}
