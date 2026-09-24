@@ -2,12 +2,14 @@ package com.chessbuzz.app
 
 import android.app.Activity
 import android.os.Bundle
+import android.graphics.Color
+import android.view.Gravity
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
+import android.widget.TextView
 
 class MainActivity : Activity() {
 
@@ -19,23 +21,29 @@ class MainActivity : Activity() {
         try {
             webView = WebView(this)
 
+            webView.setBackgroundColor(Color.rgb(16, 19, 24))
+
             webView.settings.apply {
                 javaScriptEnabled = true
                 domStorageEnabled = true
                 allowFileAccess = true
                 allowContentAccess = true
-                javaScriptCanOpenWindowsAutomatically = true
+                databaseEnabled = true
                 mediaPlaybackRequiresUserGesture = false
             }
 
             webView.webViewClient = object : WebViewClient() {
 
                 override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
+                    view: WebView,
+                    request: WebResourceRequest,
+                    error: WebResourceError
                 ) {
-                    super.onReceivedError(view, request, error)
+                    if (request.isForMainFrame) {
+                        showError(
+                            "WebView error\n\n${error.description}"
+                        )
+                    }
                 }
             }
 
@@ -45,13 +53,26 @@ class MainActivity : Activity() {
 
             webView.loadUrl("file:///android_asset/index.html")
 
-        } catch (e: Exception) {
-            Toast.makeText(
-                this,
-                "ChessBuzz error: ${e.message}",
-                Toast.LENGTH_LONG
-            ).show()
+        } catch (e: Throwable) {
+            showError(
+                "ChessBuzz startup error\n\n" +
+                "${e.javaClass.simpleName}\n\n" +
+                "${e.message ?: "Unknown error"}"
+            )
         }
+    }
+
+    private fun showError(message: String) {
+        val errorView = TextView(this)
+
+        errorView.text = message
+        errorView.textSize = 16f
+        errorView.setTextColor(Color.WHITE)
+        errorView.setBackgroundColor(Color.rgb(16, 19, 24))
+        errorView.gravity = Gravity.CENTER
+        errorView.setPadding(40, 40, 40, 40)
+
+        setContentView(errorView)
     }
 
     override fun onDestroy() {
@@ -59,15 +80,7 @@ class MainActivity : Activity() {
             webView.stopLoading()
             webView.destroy()
         }
-        super.onDestroy()
-    }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (::webView.isInitialized && webView.canGoBack()) {
-            webView.goBack()
-        } else {
-            super.onBackPressed()
-        }
+        super.onDestroy()
     }
 }
