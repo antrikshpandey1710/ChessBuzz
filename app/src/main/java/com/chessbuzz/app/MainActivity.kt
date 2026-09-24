@@ -3,8 +3,11 @@ package com.chessbuzz.app
 import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 
 class MainActivity : Activity() {
 
@@ -13,24 +16,55 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        webView = WebView(this)
+        try {
+            webView = WebView(this)
 
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
-        webView.settings.allowFileAccess = true
-        webView.settings.allowContentAccess = true
+            webView.settings.apply {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+                allowFileAccess = true
+                allowContentAccess = true
+                javaScriptCanOpenWindowsAutomatically = true
+                mediaPlaybackRequiresUserGesture = false
+            }
 
-        webView.webViewClient = WebViewClient()
-        webView.webChromeClient = WebChromeClient()
+            webView.webViewClient = object : WebViewClient() {
 
-        webView.loadUrl("file:///android_asset/index.html")
+                override fun onReceivedError(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                    error: WebResourceError?
+                ) {
+                    super.onReceivedError(view, request, error)
+                }
+            }
 
-        setContentView(webView)
+            webView.webChromeClient = WebChromeClient()
+
+            setContentView(webView)
+
+            webView.loadUrl("file:///android_asset/index.html")
+
+        } catch (e: Exception) {
+            Toast.makeText(
+                this,
+                "ChessBuzz error: ${e.message}",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    override fun onDestroy() {
+        if (::webView.isInitialized) {
+            webView.stopLoading()
+            webView.destroy()
+        }
+        super.onDestroy()
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (webView.canGoBack()) {
+        if (::webView.isInitialized && webView.canGoBack()) {
             webView.goBack()
         } else {
             super.onBackPressed()
