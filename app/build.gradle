@@ -20,3 +20,18 @@ android {
         buildConfig true
     }
 }
+
+tasks.register('buildReactApp', Exec) {
+    workingDir '..'
+    commandLine 'npm', 'run', 'build'
+}
+
+tasks.register('copyReactBuildToAssets', Copy) {
+    dependsOn 'buildReactApp'
+    from '../dist'
+    into 'src/main/assets'
+}
+
+tasks.named('preBuild') {
+    dependsOn 'copyReactBuildToAssets'
+}

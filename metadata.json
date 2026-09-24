@@ -1,0 +1,8 @@
+{
+  "name": "ChessBuzz",
+  "description": "Play chess against bots of varying difficulty.",
+  "prompt": "ChessBuzz chess game app rewritten in React with multiple difficulty levels.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

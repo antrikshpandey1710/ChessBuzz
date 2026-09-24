@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+/* 
+ * ChessBuzz Premium 3D Mobile Chess Design
+ * Warm wood parlor aesthetics, realistic Staunton pieces, tournament green & cream board
+ */
+
+:root {
+  --wood-bg-deep: #160c07;
+  --wood-bg-mid: #2a170d;
+  --wood-bg-warm: #3b2214;
+  --wood-frame-dark: #22120a;
+  --wood-frame-light: #4c2c19;
+  --brass-accent: #cfa858;
+  --brass-glow: rgba(207, 168, 88, 0.4);
+  --board-light: #eae5cb;
+  --board-dark: #3b6845;
+  --board-dark-hover: #477b53;
+  --board-light-hover: #f3f0dc;
+  --highlight-last-move: rgba(235, 195, 78, 0.42);
+  --highlight-selected: rgba(67, 185, 114, 0.55);
+  --highlight-check: rgba(220, 38, 38, 0.65);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: var(--wood-bg-deep);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #f5eedc;
+}
+
+/* Atmospheric Wood Background */
+.wood-tabletop {
+  background: 
+    radial-gradient(ellipse at 50% 30%, rgba(77, 43, 24, 0.45) 0%, rgba(20, 11, 6, 0.95) 80%),
+    linear-gradient(135deg, #22120a 0%, #341b0e 35%, #27140b 70%, #150b06 100%);
+  position: relative;
+}
+
+.wood-tabletop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Premium 3D Chessboard Outer Frame */
+.chess-board-frame {
+  background: linear-gradient(145deg, #462716 0%, #29150b 45%, #180c06 100%);
+  border: 1px solid rgba(207, 168, 88, 0.3);
+  box-shadow:
+    0 25px 60px -10px rgba(0, 0, 0, 0.85),
+    0 10px 25px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  padding: 10px;
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .chess-board-frame {
+    padding: 14px;
+    border-radius: 16px;
+  }
+}
+
+/* Inner Brass Inlay Ring */
+.chess-board-inner {
+  box-shadow: 
+    inset 0 0 0 2px rgba(207, 168, 88, 0.4),
+    inset 0 4px 10px rgba(0, 0, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Squares */
+.square-light {
+  background-color: var(--board-light);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+.square-dark {
+  background-color: var(--board-dark);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.15) 100%);
+}
+
+.square-selected {
+  position: relative;
+}
+.square-selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--highlight-selected);
+  box-shadow: inset 0 0 0 3px #54d27f, 0 0 12px rgba(84, 210, 127, 0.6);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.square-last-move {
+  position: relative;
+}
+.square-last-move::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--highlight-last-move);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.square-check {
+  position: relative;
+}
+.square-check::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.8) 0%, rgba(185, 28, 28, 0.4) 75%);
+  box-shadow: inset 0 0 15px rgba(239, 68, 68, 0.9);
+  animation: pulse-check 1.4s infinite alternate;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes pulse-check {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* Legal Move Dot Marker */
+.legal-move-dot {
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #4ae07d 0%, #1f8a45 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4), 0 0 8px rgba(74, 224, 125, 0.5);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Legal Move Capture Ring Marker */
+.legal-capture-ring {
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+  border: 3.5px dashed #4ae07d;
+  box-shadow: 0 0 10px rgba(74, 224, 125, 0.7);
+  pointer-events: none;
+  animation: rotate-capture 10s linear infinite;
+  z-index: 3;
+}
+
+@keyframes rotate-capture {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hint Move Marker */
+.square-hint {
+  position: relative;
+}
+.square-hint::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 3px solid #38bdf8;
+  border-radius: 6px;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.8), inset 0 0 10px rgba(56, 189, 248, 0.4);
+  animation: pulse-hint 1.2s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 4;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.5; transform: scale(0.97); }
+  50% { opacity: 1; transform: scale(1.01); }
+}
+
+/* Tactile 3D Wood / Glass Action Buttons */
+.tactile-btn {
+  background: linear-gradient(180deg, #3d2315 0%, #26140b 100%);
+  border: 1px solid rgba(207, 168, 88, 0.35);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+  color: #f7eed7;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tactile-btn:hover {
+  background: linear-gradient(180deg, #4d2d1b 0%, #2f190e 100%);
+  border-color: rgba(207, 168, 88, 0.6);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    0 0 10px rgba(207, 168, 88, 0.2);
+}
+
+.tactile-btn:active {
+  transform: translateY(1px);
+  background: linear-gradient(180deg, #1f1008 0%, #2b170c 100%);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Gold Metallic Text Gradient */
+.gold-text {
+  background: linear-gradient(180deg, #fff7d6 0%, #e6c575 45%, #b58d34 80%, #ffd978 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Bottom Information Plate */
+.info-plate {
+  background: linear-gradient(180deg, #24130a 0%, #150b06 100%);
+  border: 1px solid rgba(207, 168, 88, 0.25);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+/* Modal Backdrop */
+.modal-overlay {
+  background-color: rgba(9, 5, 3, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Promotion Modal Card */
+.promotion-card {
+  background: linear-gradient(145deg, #321b0f 0%, #1c0e07 100%);
+  border: 1px solid rgba(207, 168, 88, 0.4);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+}
+
+/* Smooth Piece Fade/Pop */
+.piece-container {
+  transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+}
